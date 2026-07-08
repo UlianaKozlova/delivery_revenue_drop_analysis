@@ -27,7 +27,6 @@ def compare_time_periods(marketing, orders):
     """
     Сравнивает конверсию заказов среди клиентов, получивших сообщения в разное время.
     """
-    # Предполагаем, что в marketing есть колонка send_hour
     def time_period(hour):
         if 6 <= hour < 12:
             return 'morning'
@@ -40,5 +39,4 @@ def compare_time_periods(marketing, orders):
     merged = marketing.merge(orders[['client_id', 'order_id']], on='client_id', how='left')
     conv_by_time = merged.groupby('time_category').apply(lambda x: x['order_id'].notna().mean())
     print('Конверсия по времени отправки:\n', conv_by_time)
-    # Можно добавить попарный Z-тест
     return conv_by_time
